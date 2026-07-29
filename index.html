@@ -145,6 +145,18 @@ button{
     color:#6a0dad;
 }
 
+.selected-correct{
+    background:#4caf50 !important;
+    color:white !important;
+    border:2px solid #2e7d32;
+}
+
+.selected-incorrect{
+    background:#d32f2f !important;
+    color:white !important;
+    border:2px solid #8b0000;
+}
+
 </style>
 
 <script>
@@ -206,13 +218,27 @@ function mark(questionNumber, correct){
     document.getElementById("finalScore").innerHTML =
         "<h2>Final Score: " + totalScore + " / 30</h2>";
 
-    let question =
-        document.querySelector(
-            'button[onclick="mark(' + questionNumber + ',true)"]'
-        ).closest('.question');
+let correctButton = document.querySelector(
+    'button[onclick="mark(' + questionNumber + ',true)"]'
+);
 
-    question.classList.add('answered');
+let incorrectButton = document.querySelector(
+    'button[onclick="mark(' + questionNumber + ',false)"]'
+);
+
+let question = correctButton.closest('.question');
+
+correctButton.classList.remove('selected-correct');
+incorrectButton.classList.remove('selected-incorrect');
+
+if(correct){
+    correctButton.classList.add('selected-correct');
 }
+else{
+    incorrectButton.classList.add('selected-incorrect');
+}
+
+question.classList.add('answered');
 
 
 </script>
