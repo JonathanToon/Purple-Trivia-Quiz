@@ -11,6 +11,7 @@ body{
     background:#f4eefc;
     max-width:1000px;
     margin:20px auto;
+    padding:0 10px;
     color:#222;
 }
     
@@ -20,26 +21,36 @@ h1{
 }
 
 .question{
-    background:white;
-    margin:30px auto;
+    background:#e8dcf7; /* light purple */
+    margin:20px auto;
     padding:15px;
-    max-width:900px;
+    width:90%;
+    max-width:600px; /* much narrower */
     border-left:6px solid purple;
-    border-radius:8px;
+    border-radius:10px;
     text-align:center;
     color:#6a0dad;
     transition: opacity 0.5s ease;
+    box-sizing:border-box;
 }
 
 .answered{
-    opacity:0.55;
+    opacity:0.75;
     transform:scale(0.98);
 }
+
+.question-title{
+    margin:0 0 12px 0;
+    color:#6a0dad;
+    font-size:1.25em;
+}    
     
 button{
     padding:8px 12px;
     margin:5px;
     cursor:pointer;
+    border-radius:6px;
+    font-size:0.95rem;
 }
 
 .answer{
@@ -70,11 +81,36 @@ button{
     border:2px solid purple;
     margin-bottom:20px;
 }
+
+.part-title{
+    text-align:center;
+    margin:40px auto 20px auto;
+    color:#6a0dad;
+}
+
+.part-title h2{
+    display:inline-block;
+    padding:10px 25px;
+    background:#d9c4f1;
+    border-radius:12px;
+} 
+
+#finalScore{
+    background:white;
+    padding:15px;
+    border:2px solid purple;
+    border-radius:8px;
+    text-align:center;
+    margin:40px auto;
+    width:90%;
+    max-width:600px;
+}
+
 </style>
 
 <script>
 let answers = {};
-let score = 0;
+let totalScore = 0;
 
 function showAnswer(id){
     let answer = document.getElementById(id);
@@ -91,18 +127,45 @@ function mark(questionNumber, correct){
     if(questionNumber in answers){
 
         if(answers[questionNumber] === true){
-            score--;
+            totalScore--;
         }
     }
 
     answers[questionNumber] = correct;
 
     if(correct){
-        score++;
+        totalScore++;
+    }
+
+    let partStart;
+    let partEnd;
+
+    if(questionNumber <= 10){
+        partStart = 1;
+        partEnd = 10;
+    }
+    else if(questionNumber <= 20){
+        partStart = 11;
+        partEnd = 20;
+    }
+    else{
+        partStart = 21;
+        partEnd = 30;
+    }
+
+    let partScore = 0;
+
+    for(let i = partStart; i <= partEnd; i++){
+        if(answers[i] === true){
+            partScore++;
+        }
     }
 
     document.getElementById("score").innerHTML =
-    "<h2>Score: " + score + " / 30</h2>";
+        "<h2>Part Score: " + partScore + " / 10</h2>";
+
+    document.getElementById("finalScore").innerHTML =
+        "<h2>Final Score: " + totalScore + " / 30</h2>";
 
     let question =
         document.querySelector(
@@ -123,13 +186,18 @@ function mark(questionNumber, correct){
 <body>
 
 <div id="score">
-<h2>Score: 0 / 30</h2>
+<h2>Part Score: 0 / 10</h2>
 </div>
 
 <h1>🟣 Wear It Purple Trivia Quiz 🟣</h1>
 
+<div class="part-title">
+    <h2>Part 1</h2>
+</div>
+    
 <div class="question">
-<p><b>1.</b> If someone is 'in the purple', what are they?</p>
+<h2 class="question-title">Question 1</h2>    
+<p> If someone is 'in the purple', what are they?</p>
 <button onclick="showAnswer('a1')">Reveal / Hide Answer</button>
 <div id="a1" class="answer">Noble</div>
 <br>
@@ -141,7 +209,8 @@ onclick="mark(1,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>2.</b> How long is the song 'Purple Rain' by the artist formally known as Prince, to the nearest minute?</p>
+<h2 class="question-title">Question 2</h2>
+<p> How long is the song 'Purple Rain' by the artist formally known as Prince, to the nearest minute?</p>
 <button onclick="showAnswer('a2')">Reveal / Hide Answer</button>
 <div id="a2" class="answer">9 minutes (8 minutes 40 seconds)</div>
 <br>
@@ -153,7 +222,8 @@ onclick="mark(2,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>3.</b> Which Pride flag does NOT contain purple: Non-binary, Lesbian, Asexual, or Bisexual?</p>
+<h2 class="question-title">Question 3</h2>
+<p> Which Pride flag does NOT contain purple: Non-binary, Lesbian, Asexual, or Bisexual?</p>
 <button onclick="showAnswer('a3')">Reveal / Hide Answer</button>
 <div id="a3" class="answer">Lesbian</div>
 <br>
@@ -165,7 +235,8 @@ onclick="mark(3,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>4.</b> Follow-up question: Name the four colours/shades in the non-binary flag.</p>
+<h2 class="question-title">Question 4</h2>
+<p> Follow-up question: Name the four colours/shades in the non-binary flag.</p>
 <button onclick="showAnswer('a4')">Reveal / Hide Answer</button>
 <div id="a4" class="answer">Purple, Yellow, White, Black</div>
 <br>
@@ -177,7 +248,8 @@ onclick="mark(4,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>5.</b> What language did the word 'purple' originate from?</p>
+<h2 class="question-title">Question 5</h2>
+<p> What language did the word 'purple' originate from?</p>
 <button onclick="showAnswer('a5')">Reveal / Hide Answer</button>
 <div id="a5" class="answer">Latin (from "purpura")</div>
 <br>
@@ -189,7 +261,8 @@ onclick="mark(5,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>6.</b> Which animal can see ultraviolet light: Bats, Reindeer, Owls, or Squids?</p>
+<h2 class="question-title">Question 6</h2>
+<p> Which animal can see ultraviolet light: Bats, Reindeer, Owls, or Squids?</p>
 <button onclick="showAnswer('a6')">Reveal / Hide Answer</button>
 <div id="a6" class="answer">Reindeer</div>
 <br>
@@ -201,7 +274,8 @@ onclick="mark(6,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>7.</b> What year was Taylor Swift's purple album 'Speak Now' released?</p>
+<h2 class="question-title">Question 7</h2>
+<p> What year was Taylor Swift's purple album 'Speak Now' released?</p>
 <button onclick="showAnswer('a7')">Reveal / Hide Answer</button>
 <div id="a7" class="answer">2010</div>
 <br>
@@ -213,7 +287,8 @@ onclick="mark(7,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>8.</b> Which AFL team wears purple as its primary colour?</p>
+<h2 class="question-title">Question 8</h2>
+<p> Which AFL team wears purple as its primary colour?</p>
 <button onclick="showAnswer('a8')">Reveal / Hide Answer</button>
 <div id="a8" class="answer">Fremantle Dockers</div>
 <br>
@@ -225,7 +300,8 @@ onclick="mark(8,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>9.</b> According to the Oxford English Dictionary, which two colours have no perfect rhyme?</p>
+<h2 class="question-title">Question 9</h2>
+<p> According to the Oxford English Dictionary, which two colours have no perfect rhyme?</p>
 <button onclick="showAnswer('a9')">Reveal / Hide Answer</button>
 <div id="a9" class="answer">Purple and Orange</div>
 <br>
@@ -237,7 +313,8 @@ onclick="mark(9,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>10.</b> 1824, 1924, or 1942 - when was Cadbury founded?</p>
+<h2 class="question-title">Question 10</h2>
+<p> 1824, 1924, or 1942 - when was Cadbury founded?</p>
 <button onclick="showAnswer('a10')">Reveal / Hide Answer</button>
 <div id="a10" class="answer">1824</div>
 <br>
@@ -248,8 +325,13 @@ onclick="mark(10,true)">✅ Correct</button>
 onclick="mark(10,false)">❌ Incorrect</button>
 </div>
 
+<div class="part-title">
+    <h2>Part 2</h2>
+</div>
+
 <div class="question">
-<p><b>11.</b> True or False: Octopuses have purple blood.</p>
+<h2 class="question-title">Question 11</h2>
+<p> True or False: Octopuses have purple blood.</p>
 <button onclick="showAnswer('a11')">Reveal / Hide Answer</button>
 <div id="a11" class="answer">False - they have blue blood</div>
 <br>
@@ -261,7 +343,8 @@ onclick="mark(11,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>12.</b> What military medal is awarded to U.S. service members wounded or killed in combat?</p>
+<h2 class="question-title">Question 12</h2>
+<p> What military medal is awarded to U.S. service members wounded or killed in combat?</p>
 <button onclick="showAnswer('a12')">Reveal / Hide Answer</button>
 <div id="a12" class="answer">The Purple Heart</div>
 <br>
@@ -273,7 +356,8 @@ onclick="mark(12,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>13.</b> Which Australian state or territory has the purple Cooktown Orchid as its floral emblem?</p>
+<h2 class="question-title">Question 13</h2>
+<p> Which Australian state or territory has the purple Cooktown Orchid as its floral emblem?</p>
 <button onclick="showAnswer('a13')">Reveal / Hide Answer</button>
 <div id="a13" class="answer">Queensland</div>
 <br>
@@ -285,7 +369,8 @@ onclick="mark(13,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>14.</b> Name one of the three country flags containing purple.</p>
+<h2 class="question-title">Question 14</h2>
+<p> Name one of the three country flags containing purple.</p>
 <button onclick="showAnswer('a14')">Reveal / Hide Answer</button>
 <div id="a14" class="answer">Dominica, El Salvador, or Nicaragua</div>
 <br>
@@ -297,7 +382,8 @@ onclick="mark(14,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>15.</b> The lavender fields are associated with which region of France?</p>
+<h2 class="question-title">Question 15</h2>
+<p> The lavender fields are associated with which region of France?</p>
 <button onclick="showAnswer('a15')">Reveal / Hide Answer</button>
 <div id="a15" class="answer">Provence</div>
 <br>
@@ -309,7 +395,8 @@ onclick="mark(15,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>16.</b> Amethyst is the birthstone for which month?</p>
+<h2 class="question-title">Question 16</h2>
+<p> Amethyst is the birthstone for which month?</p>
 <button onclick="showAnswer('a16')">Reveal / Hide Answer</button>
 <div id="a16" class="answer">February</div>
 <br>
@@ -321,7 +408,8 @@ onclick="mark(16,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>17.</b> What is the key ingredient in Crème de Cassis?</p>
+<h2 class="question-title">Question 17</h2>
+<p> What is the key ingredient in Crème de Cassis?</p>
 <button onclick="showAnswer('a17')">Reveal / Hide Answer</button>
 <div id="a17" class="answer">Blackcurrants</div>
 <br>
@@ -333,7 +421,8 @@ onclick="mark(17,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>18.</b> The world's largest living organism, the Honey Fungus, produces a purple spore. In which country is it found?</p>
+<h2 class="question-title">Question 18</h2>
+<p> The world's largest living organism, the Honey Fungus, produces a purple spore. In which country is it found?</p>
 <button onclick="showAnswer('a18')">Reveal / Hide Answer</button>
 <div id="a18" class="answer">United States of America (it covers 965 hectares of Oregon)</div>
 <br>
@@ -345,7 +434,8 @@ onclick="mark(18,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>19.</b> Which band released the 1972 hit 'Smoke on the Water'?</p>
+<h2 class="question-title">Question 19</h2>
+<p> Which band released the 1972 hit 'Smoke on the Water'?</p>
 <button onclick="showAnswer('a19')">Reveal / Hide Answer</button>
 <div id="a19" class="answer">Deep Purple</div>
 <br>
@@ -357,7 +447,8 @@ onclick="mark(19,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>20.</b> The word purple contains a 'ur' letter pairing. Name another single-word colour with this same letter pairing.</p>
+<h2 class="question-title">Question 20</h2>
+<p> The word purple contains a 'ur' letter pairing. Name another single-word colour with this same letter pairing.</p>
 <button onclick="showAnswer('a20')">Reveal / Hide Answer</button>
 <div id="a20" class="answer">Turquoise, Auburn, Burgundy, Azure, Aureolin, Burlywood, or Urobilin</div>
 <br>
@@ -368,8 +459,13 @@ onclick="mark(20,true)">✅ Correct</button>
 onclick="mark(20,false)">❌ Incorrect</button>
 </div>
 
+<div class="part-title">
+    <h2>Part 3</h2>
+</div>
+
 <div class="question">
-<p><b>21.</b> What is the name of the purple Teletubby?</p>
+<h2 class="question-title">Question 21</h2>
+<p> What is the name of the purple Teletubby?</p>
 <button onclick="showAnswer('a21')">Reveal / Hide Answer</button>
 <div id="a21" class="answer">Tinky Winky</div>
 <br>
@@ -381,7 +477,8 @@ onclick="mark(21,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>22.</b> 55%, 75%, 95% - what percentage of Ultraviolet light from the sun is blocked by earth's atmosphere?</p>
+<h2 class="question-title">Question 22</h2>
+<p> 55%, 75%, or 95% - what percentage of Ultraviolet light from the sun is blocked by earth's atmosphere?</p>
 <button onclick="showAnswer('a22')">Reveal / Hide Answer</button>
 <div id="a22" class="answer">95%</div>
 <br>
@@ -393,7 +490,8 @@ onclick="mark(22,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>23.</b> What McDonald's limited-time promotional purple drink was sold in Australia in 2024?</p>
+<h2 class="question-title">Question 23</h2>
+<p> What McDonald's limited-time promotional purple drink was sold in Australia in 2024?</p>
 <button onclick="showAnswer('a23')">Reveal / Hide Answer</button>
 <div id="a23" class="answer">The Grimace Shake</div>
 <br>
@@ -405,7 +503,8 @@ onclick="mark(23,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>24.</b> Purple bacteria in a Gram stain have what feature: a flagellum (tail), a nucleus, or a thick cell wall?</p>
+<h2 class="question-title">Question 24</h2>
+<p> Purple bacteria in a Gram stain have what feature: a flagellum (tail), a nucleus, or a thick cell wall?</p>
 <button onclick="showAnswer('a24')">Reveal / Hide Answer</button>
 <div id="a24" class="answer">A thick cell wall</div>
 <br>
@@ -417,7 +516,8 @@ onclick="mark(24,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>25.</b> Which year was Waluigi introduced to the Mario universe (correct if within 1 year of answer)?</p>
+<h2 class="question-title">Question 25</h2>
+<p> Which year was Waluigi introduced to the Mario universe (correct if within 1 year of answer)?</p>
 <button onclick="showAnswer('a25')">Reveal / Hide Answer</button>
 <div id="a25" class="answer">2000</div>
 <br>
@@ -429,7 +529,8 @@ onclick="mark(25,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>26.</b> Olivia Rodrigo's first two albums are purple. What are their names?</p>
+<h2 class="question-title">Question 26</h2>
+<p> Olivia Rodrigo's first two albums are purple. What are their titles?</p>
 <button onclick="showAnswer('a26')">Reveal / Hide Answer</button>
 <div id="a26" class="answer">SOUR and GUTS</div>
 <br>
@@ -441,7 +542,8 @@ onclick="mark(26,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>27.</b> True or False: Humans emit ultraviolet light.</p>
+<h2 class="question-title">Question 27</h2>
+<p> True or False: Humans emit ultraviolet light.</p>
 <button onclick="showAnswer('a27')">Reveal / Hide Answer</button>
 <div id="a27" class="answer">True: in fact, all living humans emit an extremely faint glow which includes some UV light</div>
 <br>
@@ -453,7 +555,8 @@ onclick="mark(27,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>28.</b> Ink Gin, infused with butterfly pea flower petals, changes from dark blue to light purple when mixed with tonic. What feature of tonic causes this change?</p>
+<h2 class="question-title">Question 28</h2>
+<p> Ink Gin, infused with butterfly pea flower petals, changes from dark blue to light purple when mixed with tonic. What feature of tonic causes this change?</p>
 <button onclick="showAnswer('a28')">Reveal / Hide Answer</button>
 <div id="a28" class="answer">Its slightly acidic pH (this causes the pigments in the petals to change colour)</div>
 <br>
@@ -465,7 +568,8 @@ onclick="mark(28,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>29.</b> Tyrian purple dye was first produced from sea snails found in which sea?</p>
+<h2 class="question-title">Question 29</h2>
+<p> Tyrian purple dye was first produced from sea snails found in which sea?</p>
 <button onclick="showAnswer('a29')">Reveal / Hide Answer</button>
 <div id="a29" class="answer">The Mediterranean Sea</div>
 <br>
@@ -477,7 +581,8 @@ onclick="mark(29,false)">❌ Incorrect</button>
 </div>
 
 <div class="question">
-<p><b>30.</b> How many Oscars did Steven Spielberg's 1985 'The Color Purple' win?</p>
+<h2 class="question-title">Question 30</h2>
+<p> How many Oscars did Steven Spielberg's 1985 'The Color Purple' win?</p>
 <button onclick="showAnswer('a30')">Reveal / Hide Answer</button>
 <div id="a30" class="answer">Zero (despite being nominated for 11)</div>
 <br>
@@ -486,6 +591,10 @@ onclick="mark(30,true)">✅ Correct</button>
 
 <button class="incorrect"
 onclick="mark(30,false)">❌ Incorrect</button>
+</div>
+
+<div id="finalScore">
+    <h2>Final Score: 0 / 30</h2>
 </div>
 
 </body>
