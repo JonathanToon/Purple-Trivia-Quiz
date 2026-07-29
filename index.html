@@ -162,51 +162,62 @@ function showAnswer(id){
 
 function mark(questionNumber, correct){
 
-    if(questionNumber in answers){
+    answers[questionNumber] = correct;
 
-        if(answers[questionNumber] === true){
-            totalScore--;
+    let totalScore = 0;
+    let part1 = 0;
+    let part2 = 0;
+    let part3 = 0;
+
+    for(let i = 1; i <= 10; i++){
+        if(answers[i] === true){
+            part1++;
+            totalScore++;
         }
     }
 
-    answers[questionNumber] = correct;
-
-    if(correct){
-        totalScore++;
-    }
-
-    let partStart;
-    let partEnd;
-
-    if(questionNumber <= 10){
-        partStart = 1;
-        partEnd = 10;
-    }
-    else if(questionNumber <= 20){
-        partStart = 11;
-        partEnd = 20;
-    }
-    else{
-        partStart = 21;
-        partEnd = 30;
-    }
-
-    let partScore = 0;
-
-    for(let i = partStart; i <= partEnd; i++){
+    for(let i = 11; i <= 20; i++){
         if(answers[i] === true){
-            partScore++;
+            part2++;
+            totalScore++;
+        }
+    }
+
+    for(let i = 21; i <= 30; i++){
+        if(answers[i] === true){
+            part3++;
+            totalScore++;
         }
     }
 
     document.getElementById("score").innerHTML =
-        "<h2>Part Score: " + partScore + " / 10</h2>";
+        "<h3>Part 1: " + part1 + " / 10</h3>" +
+        "<h3>Part 2: " + part2 + " / 10</h3>" +
+        "<h3>Part 3: " + part3 + " / 10</h3>" +
+        "<hr>" +
+        "<h2>Total: " + totalScore + " / 30</h2>";
+
+    document.getElementById("part1Summary").innerHTML =
+        "Part 1 Score: " + part1 + " / 10";
+
+    document.getElementById("part2Summary").innerHTML =
+        "Part 2 Score: " + part2 + " / 10";
+
+    document.getElementById("part3Summary").innerHTML =
+        "Part 3 Score: " + part3 + " / 10";
 
     document.getElementById("finalScore").innerHTML =
         "<h2>Final Score: " + totalScore + " / 30</h2>";
 
+    let question =
+        document.querySelector(
+            'button[onclick="mark(' + questionNumber + ',true)"]'
+        ).closest('.question');
+
     question.classList.add('answered');
 }
+
+
 </script>
 </head>
 <body>
@@ -630,7 +641,6 @@ onclick="mark(30,false)">❌ Incorrect</button>
 <div class="part-summary" id="part3Summary">
     Part 3 Score: 0 / 10
 </div>
-``
 
 <div id="finalScore">
     <h2>Final Score: 0 / 30</h2>
