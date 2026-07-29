@@ -106,6 +106,44 @@ button{
     max-width:600px;
 }
 
+    .part-title{
+    text-align:center;
+    margin:60px auto 30px auto;
+    position:relative;
+}
+
+.part-title::before{
+    content:"";
+    display:block;
+    height:4px;
+    background:#6a0dad;
+    width:100%;
+    max-width:700px;
+    margin:0 auto 20px auto;
+    border-radius:2px;
+}
+
+.part-title h2{
+    display:inline-block;
+    padding:12px 30px;
+    background:#d9c4f1;
+    color:#6a0dad;
+    border-radius:15px;
+}
+
+.part-summary{
+    background:#e8dcf7;
+    border:2px solid #6a0dad;
+    border-radius:10px;
+    padding:15px;
+    width:90%;
+    max-width:600px;
+    margin:20px auto 50px auto;
+    text-align:center;
+    font-weight:bold;
+    color:#6a0dad;
+}
+
 </style>
 
 <script>
@@ -167,19 +205,7 @@ function mark(questionNumber, correct){
     document.getElementById("finalScore").innerHTML =
         "<h2>Final Score: " + totalScore + " / 30</h2>";
 
-    let question =
-        document.querySelector(
-            'button[onclick="mark(' + questionNumber + ',true)"]'
-        ).closest('.question');
-
     question.classList.add('answered');
-
-    setTimeout(function(){
-        question.scrollIntoView({
-            behavior:'smooth',
-            block:'end'
-        });
-    },300);
 }
 </script>
 </head>
@@ -325,6 +351,10 @@ onclick="mark(10,true)">✅ Correct</button>
 onclick="mark(10,false)">❌ Incorrect</button>
 </div>
 
+<div class="part-summary" id="part1Summary">
+    Part 1 Score: 0 / 10
+</div>
+    
 <div class="part-title">
     <h2>Part 2</h2>
 </div>
@@ -459,6 +489,10 @@ onclick="mark(20,true)">✅ Correct</button>
 onclick="mark(20,false)">❌ Incorrect</button>
 </div>
 
+<div class="part-summary" id="part2Summary">
+    Part 2 Score: 0 / 10
+</div>
+    
 <div class="part-title">
     <h2>Part 3</h2>
 </div>
@@ -592,6 +626,11 @@ onclick="mark(30,true)">✅ Correct</button>
 <button class="incorrect"
 onclick="mark(30,false)">❌ Incorrect</button>
 </div>
+
+<div class="part-summary" id="part3Summary">
+    Part 3 Score: 0 / 10
+</div>
+``
 
 <div id="finalScore">
     <h2>Final Score: 0 / 30</h2>
