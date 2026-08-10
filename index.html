@@ -76,6 +76,7 @@ button{
 #score{
     position:sticky;
     top:10px;
+    z-index: 1000;
     background:white;
     padding:10px;
     border-radius:8px;
@@ -257,9 +258,9 @@ question.classList.add('answered');
 
 <div class="question">
 <h2 class="question-title">Question 1</h2>    
-<p> If someone is 'in the purple', what are they?</p>
+<p> What is the name of the purple Teletubby? </p>
 <button onclick="showAnswer('a1')">Reveal / Hide Answer</button>
-<div id="a1" class="answer">Noble</div>
+<div id="a1" class="answer">Tinky Winky</div>
 <br>
 <button class="correct"
 onclick="mark(1,true)">✅ Correct</button>
@@ -309,9 +310,9 @@ onclick="mark(4,false)">❌ Incorrect</button>
 
 <div class="question">
 <h2 class="question-title">Question 5</h2>
-<p> What language did the word 'purple' originate from?</p>
+<p> Amethyst is the birthstone for which month?</p>
 <button onclick="showAnswer('a5')">Reveal / Hide Answer</button>
-<div id="a5" class="answer">Latin (from "purpura")</div>
+<div id="a5" class="answer">February</div>
 <br>
 <button class="correct"
 onclick="mark(5,true)">✅ Correct</button>
@@ -460,9 +461,9 @@ onclick="mark(15,false)">❌ Incorrect</button>
 
 <div class="question">
 <h2 class="question-title">Question 16</h2>
-<p> Amethyst is the birthstone for which month?</p>
+<p> What language did the word 'purple' originate from? </p>
 <button onclick="showAnswer('a16')">Reveal / Hide Answer</button>
-<div id="a16" class="answer">February</div>
+<div id="a16" class="answer">Latin (from "purpura")</div>
 <br>
 <button class="correct"
 onclick="mark(16,true)">✅ Correct</button>
@@ -533,9 +534,9 @@ onclick="mark(20,false)">❌ Incorrect</button>
 
 <div class="question">
 <h2 class="question-title">Question 21</h2>
-<p> What is the name of the purple Teletubby?</p>
+<p> If someone is 'in the purple', what are they?</p>
 <button onclick="showAnswer('a21')">Reveal / Hide Answer</button>
-<div id="a21" class="answer">Tinky Winky</div>
+<div id="a21" class="answer">Noble</div>
 <br>
 <button class="correct"
 onclick="mark(21,true)">✅ Correct</button>
@@ -572,7 +573,7 @@ onclick="mark(23,false)">❌ Incorrect</button>
 
 <div class="question">
 <h2 class="question-title">Question 24</h2>
-<p> Purple bacteria in a Gram stain have what feature: a flagellum (tail), a nucleus, or a thick cell wall?</p>
+<p> When observing a Gram stain under a microscope, bacteria that remain purple possess what feature: a flagellum (tail), a nucleus, or a thick cell wall?</p>
 <button onclick="showAnswer('a24')">Reveal / Hide Answer</button>
 <div id="a24" class="answer">A thick cell wall</div>
 <br>
@@ -587,7 +588,7 @@ onclick="mark(24,false)">❌ Incorrect</button>
 <h2 class="question-title">Question 25</h2>
 <p> Which year was Waluigi introduced to the Mario universe (correct if within 1 year of answer)?</p>
 <button onclick="showAnswer('a25')">Reveal / Hide Answer</button>
-<div id="a25" class="answer">2000</div>
+<div id="a25" class="answer">2000 (from the Nintendo 64 game 'Mario Tennis')</div>
 <br>
 <button class="correct"
 onclick="mark(25,true)">✅ Correct</button>
